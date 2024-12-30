@@ -1,95 +1,70 @@
-// JavaScript for interactive animations and particle background
-
-// Initialize particles.js background effect
-particlesJS("particles-js", {
-    "particles": {
-        "number": {
-            "value": 80,  // Reduced particle number for better performance
-            "density": {
-                "enable": true,
-                "value_area": 800
-            }
-        },
-        "color": {
-            "value": "#00ff99"
-        },
-        "shape": {
-            "type": "circle"
-        },
-        "opacity": {
-            "value": 0.5,
-            "random": true,
-            "anim": {
-                "enable": true,
-                "speed": 1,
-                "opacity_min": 0.1
-            }
-        },
-        "size": {
-            "value": 3,
-            "random": true
-        },
-        "move": {
-            "enable": true,
-            "speed": 1,
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out"
-        }
-    },
-    "interactivity": {
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": "repulse"
-            }
-        }
+// 动态文本逐字显示（模拟命令行输入效果）
+document.addEventListener("DOMContentLoaded", function() {
+    const text1 = "兴趣，梦想，学习提升和责任是我的驱动！";
+    const text2 = "希望最大化发挥我的潜能！";
+    const manifestoElement = document.querySelector('.scrolling-text');
+  
+    function typeText(text, index, callback) {
+      if (index < text.length) {
+        manifestoElement.innerHTML += text[index++];
+        setTimeout(() => typeText(text, index, callback), 100);
+      } else {
+        if (callback) callback();
+      }
     }
-});
-
-// Scroll-based animation (optimized with requestAnimationFrame)
-document.addEventListener("DOMContentLoaded", function () {
-    const shortTermGoals = document.getElementById("short-term-goals");
-    const longTermGoals = document.getElementById("long-term-goals");
-
-    let isScrolling = false;
-
-    // Debounced scroll function to improve performance
-    window.addEventListener("scroll", function () {
-        if (!isScrolling) {
-            window.requestAnimationFrame(function () {
-                checkScrollPosition();
-                isScrolling = false;
-            });
-            isScrolling = true;
-        }
+  
+    typeText(text1, 0, function() {
+      setTimeout(() => {
+        manifestoElement.innerHTML += '<br>';
+        typeText(text2, 0);
+      }, 1000);  // 等待一秒后显示第二行文字
     });
-
-    function checkScrollPosition() {
-        let scrollPosition = window.scrollY;
-
-        // Short term goals fade-in effect
-        if (scrollPosition > shortTermGoals.offsetTop - window.innerHeight + 100) {
-            shortTermGoals.querySelector(".content p").style.opacity = 1;
-            shortTermGoals.querySelector(".content p").style.animation = "fadeIn 2s ease-out forwards";
-        }
-
-        // Long term goals fade-in effect
-        if (scrollPosition > longTermGoals.offsetTop - window.innerHeight + 100) {
-            longTermGoals.querySelector(".content p").style.opacity = 1;
-            longTermGoals.querySelector(".content p").style.animation = "fadeIn 2s ease-out forwards";
-        }
+  });
+  
+  // 动态更新进度条
+  window.addEventListener('scroll', function() {
+    let shortTerm = document.querySelector('.short-term-progress');
+    let longTerm = document.querySelector('.long-term-progress');
+    let scrollY = window.scrollY;
+  
+    // 短期目标进度条（滚动到一定位置后增加）
+    if (scrollY > 100 && scrollY < 600) {
+      let progress = Math.min((scrollY - 100) / 500 * 100, 100);
+      shortTerm.style.width = progress + '%';
     }
-
-    // Social share buttons functionality
-    document.getElementById("twitter-share").addEventListener("click", function () {
-        window.open("https://twitter.com/intent/tweet?text=梦想宣言&url=" + window.location.href, "_blank");
-        alert('感谢分享！');
-    });
-
-    document.getElementById("facebook-share").addEventListener("click", function () {
-        window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "_blank");
-        alert('感谢分享！');
-    });
-});
+  
+    // 长期目标进度条（滚动到一定位置后增加）
+    if (scrollY > 600) {
+      let progress = Math.min((scrollY - 600) / 400 * 100, 100);
+      longTerm.style.width = progress + '%';
+    }
+  
+    // 进度条的数字显示
+    document.querySelector('.short-term-progress-number').innerText = Math.floor(shortTerm.style.width.replace('%', '')) + '%';
+    document.querySelector('.long-term-progress-number').innerText = Math.floor(longTerm.style.width.replace('%', '')) + '%';
+  });
+  
+  // 模拟CRT屏幕过渡效果（页面加载时的闪烁效果）
+  document.addEventListener("DOMContentLoaded", function() {
+    const body = document.querySelector('body');
+    body.classList.add('loading');  // 添加 loading 类来启动闪烁效果
+  
+    setTimeout(() => {
+      body.classList.remove('loading');  // 延迟后移除 loading 类，完成闪烁效果
+    }, 3000);  // 3秒钟后去除闪烁
+  });
+  
+  // 闪烁屏幕效果的CSS
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .loading {
+      animation: flicker 0.2s infinite;
+    }
+    @keyframes flicker {
+      0% { background-color: black; }
+      50% { background-color: #0f0; }
+      100% { background-color: black; }
+    }
+  `;
+  document.head.appendChild(style);
+  
