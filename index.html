@@ -3,36 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科技感网页</title>
-    <!-- 引入外部CSS文件 -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- 引入外部库 -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.139.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/botpress"></script>
+    <meta name="description" content="梦想宣言 - 未来的科技与责任">
+    <meta name="keywords" content="梦想, 目标, AI, 自动化, 创业">
+    <meta name="author" content="你的名字">
+    <title>梦想宣言</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 全屏背景视频 -->
-    <video autoplay muted loop id="background-video">
-        <source src="background-video.mp4" type="video/mp4">
-    </video>
 
-    <!-- 动态文本 -->
-    <div class="tagline"></div>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
 
-    <!-- 3D 动画容器 -->
-    <div id="3d-container"></div>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
 
-    <!-- 实时数据展示 -->
-    <canvas id="myChart"></canvas>
+        <!-- 页面顶部 -->
+        <header id="header">
+            <h1 id="dream-title">梦想宣言</h1>
+            <p id="intro-text">兴趣，梦想，学习提升和责任是我的驱动！<br>希望最大化发挥我的潜能！</p>
+        </header>
 
-    <!-- 聊天机器人容器 -->
-    <div id="chatbot-container"></div>
+        <!-- 短期目标 -->
+        <section id="short-term-goals">
+            <h2 class="section-title">短期目标</h2>
+            <div class="content">
+                <p>我想要寻找一个平台，<br>是能够契合我过去跨境电商的经验，<br>并且可以让我实现有关AI自动化操作应用，提升工作效率的舞台。</p>
+            </div>
+        </section>
 
-    <!-- 引入外部JS文件 -->
+        <!-- 长期目标 -->
+        <section id="long-term-goals">
+            <h2 class="section-title">长期目标</h2>
+            <div class="content">
+                <p>未来2-3年后，我会继续创业，探索更多可能！</p>
+            </div>
+        </section>
+
+        <!-- 社交分享按钮 -->
+        <section id="social-share">
+            <h2 class="section-title">分享你的梦想</h2>
+            <div class="social-buttons">
+                <button class="social-btn" id="twitter-share">
+                    <i class="fab fa-twitter"></i> 分享到 Twitter
+                </button>
+                <button class="social-btn" id="facebook-share">
+                    <i class="fab fa-facebook"></i> 分享到 Facebook
+                </button>
+            </div>
+        </section>
+
+        <!-- 页面底部 -->
+        <footer id="footer">
+            <p>希望这个梦想宣言将成为我未来努力的动力！</p>
+            <p>© 2024 - 未来科技与梦想之路</p>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

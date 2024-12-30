@@ -1,130 +1,95 @@
-// 1. **全屏背景视频设置**
-const setupBackgroundVideo = () => {
-    const video = document.createElement('video');
-    video.src = 'background-video.mp4'; // 设置背景视频的路径
-    video.autoplay = true;
-    video.muted = true;
-    video.loop = true;
-    video.style.position = 'fixed';
-    video.style.top = 0;
-    video.style.left = 0;
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.style.objectFit = 'cover';
-    video.style.zIndex = -1;
-    document.body.appendChild(video);
-  };
-  
-  // 2. **动态文本（Typed.js）**
-  const setupDynamicText = () => {
-    new Typed('.tagline', {
-      strings: [
-        '梦想，学习提升和责任是我的驱动！',
-        '希望最大化发挥我的潜能！',
-        'AI自动化是我的未来！'
-      ],
-      typeSpeed: 60,
-      backSpeed: 30,
-      backDelay: 1000,
-      loop: true
-    });
-  };
-  
-  // 3. **3D 动画（Three.js）**
-  const setup3DAnimation = () => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-  
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-  
-    camera.position.z = 5;
-  
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    };
-    animate();
-  };
-  
-  // 4. **实时数据展示（Chart.js）**
-  const setupChart = () => {
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        datasets: [{
-          label: '销售数据',
-          data: [10, 25, 50, 70, 85],
-          borderColor: '#00bcd4',
-          fill: false
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            title: { display: true, text: '月份' }
-          },
-          y: {
-            title: { display: true, text: '销售额' }
-          }
+// JavaScript for interactive animations and particle background
+
+// Initialize particles.js background effect
+particlesJS("particles-js", {
+    "particles": {
+        "number": {
+            "value": 80,  // Reduced particle number for better performance
+            "density": {
+                "enable": true,
+                "value_area": 800
+            }
+        },
+        "color": {
+            "value": "#00ff99"
+        },
+        "shape": {
+            "type": "circle"
+        },
+        "opacity": {
+            "value": 0.5,
+            "random": true,
+            "anim": {
+                "enable": true,
+                "speed": 1,
+                "opacity_min": 0.1
+            }
+        },
+        "size": {
+            "value": 3,
+            "random": true
+        },
+        "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out"
         }
-      }
-    });
-  };
-  
-  // 5. **语音识别（Web Speech API）**
-  const setupVoiceRecognition = () => {
-    const recognition = new window.SpeechRecognition();
-    recognition.lang = "zh-CN";
-    recognition.start();
-  
-    recognition.onresult = function(event) {
-      let transcript = event.results[0][0].transcript;
-      console.log("User said: " + transcript);
-    };
-  };
-  
-  // 6. **区块链模拟（Web3.js）**
-  const setupBlockchainSimulation = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      const web3 = new Web3(window.ethereum);
-      const accounts = await web3.eth.requestAccounts();
-      const userAddress = accounts[0];
-      console.log('User address: ', userAddress);
-    } else {
-      console.log('Ethereum not detected!');
+    },
+    "interactivity": {
+        "events": {
+            "onhover": {
+                "enable": true,
+                "mode": "repulse"
+            }
+        }
     }
-  };
-  
-  // 7. **聊天机器人（Botpress）**
-  const setupChatBot = () => {
-    const bot = new BotpressBot({
-      apiKey: 'YOUR_BOTPRESS_API_KEY',
-      containerId: 'chatbot-container'
+});
+
+// Scroll-based animation (optimized with requestAnimationFrame)
+document.addEventListener("DOMContentLoaded", function () {
+    const shortTermGoals = document.getElementById("short-term-goals");
+    const longTermGoals = document.getElementById("long-term-goals");
+
+    let isScrolling = false;
+
+    // Debounced scroll function to improve performance
+    window.addEventListener("scroll", function () {
+        if (!isScrolling) {
+            window.requestAnimationFrame(function () {
+                checkScrollPosition();
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
     });
-  };
-  
-  // 8. **初始化函数：调用所有功能**
-  const init = () => {
-    setupBackgroundVideo();
-    setupDynamicText();
-    setup3DAnimation();
-    setupChart();
-    setupVoiceRecognition();
-    setupBlockchainSimulation();
-    setupChatBot();
-  };
-  
-  // 执行初始化函数
-  init();
-  
+
+    function checkScrollPosition() {
+        let scrollPosition = window.scrollY;
+
+        // Short term goals fade-in effect
+        if (scrollPosition > shortTermGoals.offsetTop - window.innerHeight + 100) {
+            shortTermGoals.querySelector(".content p").style.opacity = 1;
+            shortTermGoals.querySelector(".content p").style.animation = "fadeIn 2s ease-out forwards";
+        }
+
+        // Long term goals fade-in effect
+        if (scrollPosition > longTermGoals.offsetTop - window.innerHeight + 100) {
+            longTermGoals.querySelector(".content p").style.opacity = 1;
+            longTermGoals.querySelector(".content p").style.animation = "fadeIn 2s ease-out forwards";
+        }
+    }
+
+    // Social share buttons functionality
+    document.getElementById("twitter-share").addEventListener("click", function () {
+        window.open("https://twitter.com/intent/tweet?text=梦想宣言&url=" + window.location.href, "_blank");
+        alert('感谢分享！');
+    });
+
+    document.getElementById("facebook-share").addEventListener("click", function () {
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href, "_blank");
+        alert('感谢分享！');
+    });
+});
