@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技感网页</title>
+    <!-- 引入外部CSS文件 -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- 引入外部库 -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.139.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/botpress"></script>
+</head>
+<body>
+    <!-- 全屏背景视频 -->
+    <video autoplay muted loop id="background-video">
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+
+    <!-- 动态文本 -->
+    <div class="tagline"></div>
+
+    <!-- 3D 动画容器 -->
+    <div id="3d-container"></div>
+
+    <!-- 实时数据展示 -->
+    <canvas id="myChart"></canvas>
+
+    <!-- 聊天机器人容器 -->
+    <div id="chatbot-container"></div>
+
+    <!-- 引入外部JS文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
