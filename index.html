@@ -1,47 +1,41 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>梦想宣言</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 顶部标题 -->
-  <header class="header">
-    <h1 class="neon-text">梦想宣言</h1>
-  </header>
+  <!-- 背景 -->
+  <canvas id="background"></canvas>
+  
+  <!-- 页面内容 -->
+  <div class="content">
+    <!-- 霓虹灯标题 -->
+    <header class="neon-header">
+      <h1 id="title"></h1>
+    </header>
 
-  <!-- 动态文本区域 -->
-  <section class="manifesto">
-    <div class="scrolling-text">
-      <!-- 动态逐字显示的内容 -->
-    </div>
-  </section>
-
-  <!-- 时间线与目标 -->
-  <section class="timeline">
-    <article class="timeline-item short-term">
-      <h2>短期目标</h2>
-      <p>我想要寻找一个平台，契合我过去跨境电商的经验，并且能让我实现有关AI自动化操作应用，提升工作效率的舞台。</p>
-      <div class="progress-bar">
-        <div class="progress short-term-progress"></div>
-        <span class="progress-number short-term-progress-number">0%</span>
+    <!-- 目标展示 -->
+    <section class="goals">
+      <div class="goal">
+        <h2>短期目标</h2>
+        <p>寻找契合跨境电商经验的平台，探索AI自动化操作应用。</p>
+        <div class="progress-bar" id="short-term">
+          <div class="progress" id="short-progress"></div>
+        </div>
       </div>
-    </article>
-
-    <article class="timeline-item long-term">
-      <h2>长期目标</h2>
-      <p>可能未来2-3年后，我会继续创业。</p>
-      <div class="progress-bar">
-        <div class="progress long-term-progress"></div>
-        <span class="progress-number long-term-progress-number">0%</span>
+      <div class="goal">
+        <h2>长期目标</h2>
+        <p>未来2-3年后继续创业，打造更智能的跨境电商平台。</p>
+        <div class="progress-bar" id="long-term">
+          <div class="progress" id="long-progress"></div>
+        </div>
       </div>
-    </article>
-  </section>
+    </section>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
