@@ -3,38 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>梦想宣言</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>科技感网页</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 背景 -->
-  <canvas id="background"></canvas>
-  
-  <!-- 页面内容 -->
-  <div class="content">
-    <!-- 霓虹灯标题 -->
-    <header class="neon-header">
-      <h1 id="title"></h1>
-    </header>
 
-    <!-- 目标展示 -->
-    <section class="goals">
-      <div class="goal">
-        <h2>短期目标</h2>
-        <p>寻找契合跨境电商经验的平台，探索AI自动化操作应用。</p>
-        <div class="progress-bar" id="short-term">
-          <div class="progress" id="short-progress"></div>
-        </div>
-      </div>
-      <div class="goal">
-        <h2>长期目标</h2>
-        <p>未来2-3年后继续创业，打造更智能的跨境电商平台。</p>
-        <div class="progress-bar" id="long-term">
-          <div class="progress" id="long-progress"></div>
-        </div>
-      </div>
-    </section>
+  <!-- 梦想宣言区域 -->
+  <div class="content">
+    <h1>梦想宣言</h1>
+    <div class="dynamic-text">兴趣，梦想，学习提升和责任是我的驱动！</div>
+    <div class="dynamic-text">希望最大化发挥我的潜能，与创意！</div>
+    <div class="dynamic-text">让人生充满想象与创造力！</div>
   </div>
+
+  <!-- 区块链魔方 -->
+  <div id="blockchainCube" class="blockchain-cube">
+    <p>区块链魔方</p>
+  </div>
+
+  <!-- 目标区域 -->
+  <div class="goals">
+    <h3>目标</h3>
+    <p><strong>短期目标：</strong>我想要寻找一个平台，能够契合我过去跨境电商的经验，并且可以让我实现有关AI自动化操作应用提升工作效率的舞台。</p>
+    <p><strong>长期目标：</strong>未来2-3年后，我会继续创业，挑战更多的可能性。</p>
+  </div>
+
+  <!-- 音频播放（可选） -->
+  <audio id="backgroundMusic" controls>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
 
   <script src="script.js"></script>
 </body>

@@ -1,113 +1,147 @@
-/* 添加更具未来感的背景色和文字效果 */
+/* 基本页面样式 */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: black;
-  font-family: 'Courier New', Courier, monospace;
-  color: white;
-  overflow-x: hidden;
-}
-
-h1, h2 {
-  font-family: 'Courier New', Courier, monospace;
-  text-align: center;
-  color: #00FF00; /* Neon Green */
-  text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
-  margin: 20px 0;
-  position: relative;
-}
-
-/* 霓虹灯效果 */
-.neon-header h1 {
-  font-size: 3rem;
-  letter-spacing: 5px;
-  animation: neonText 1.5s infinite alternate, flicker 0.05s infinite;
-}
-
-@keyframes neonText {
-  0% {
-    text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00, 0 0 30px #00FF00;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  100% {
-    text-shadow: 0 0 20px #FF00FF, 0 0 30px #FF00FF, 0 0 40px #FF00FF;
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #000428, #004e92); /* 初始渐变背景 */
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: background 1s ease; /* 背景颜色过渡 */
   }
-}
-
-@keyframes flicker {
-  0% { opacity: 1; }
-  20% { opacity: 0.6; }
-  40% { opacity: 0.9; }
-  60% { opacity: 0.7; }
-  80% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
-/* 目标进度条 */
-.goals {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.goal {
-  background-color: rgba(0, 255, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 30px;
-  border-radius: 10px;
-  width: 80%;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-  transition: transform 0.2s ease;
-}
-
-.goal:hover {
-  transform: scale(1.05);
-}
-
-.progress-bar {
-  width: 100%;
-  background-color: #333;
-  border-radius: 5px;
-  margin-top: 20px;
-  height: 20px;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-}
-
-.progress {
-  width: 0%;
-  height: 100%;
-  background-color: #00FF00;
-  border-radius: 5px;
-  transition: width 1s ease-out;
-}
-
-@media (max-width: 768px) {
-  .goal {
-    width: 90%;
+  
+  /* 动态文本效果 */
+  .dynamic-text {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeInText 3s forwards;
+    margin: 10px 0;
   }
-}
-
-/* 新增粒子背景 */
-.particle {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: #00FF00;
-  border-radius: 50%;
-  opacity: 0.7;
-  pointer-events: none;
-  animation: particleAnimation 5s infinite linear;
-}
-
-@keyframes particleAnimation {
-  0% {
-    transform: translate3d(0, 0, 0);
+  
+  .dynamic-text:nth-child(1) {
+    animation-delay: 1s;
   }
-  100% {
-    transform: translate3d(100vw, 100vh, 0);
+  .dynamic-text:nth-child(2) {
+    animation-delay: 3s;
   }
-}
+  .dynamic-text:nth-child(3) {
+    animation-delay: 5s;
+  }
+  
+  @keyframes fadeInText {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 区块链魔方样式 */
+  .blockchain-cube {
+    width: 100px;
+    height: 100px;
+    background-color: #0f4b6e;
+    margin-top: 40px;
+    display: inline-block;
+    transform-style: preserve-3d;
+    animation: rotateCube 5s infinite linear;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* 增加立体效果 */
+  }
+  
+  .blockchain-cube p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* 区块链魔方旋转动画 */
+  @keyframes rotateCube {
+    0% {
+      transform: rotateX(0) rotateY(0);
+    }
+    25% {
+      transform: rotateX(90deg);
+    }
+    50% {
+      transform: rotateX(180deg);
+    }
+    75% {
+      transform: rotateX(270deg);
+    }
+    100% {
+      transform: rotateX(360deg);
+    }
+  }
+  
+  /* 目标区域样式 */
+  .goals {
+    margin-top: 50px;
+    font-size: 1.2rem;
+    color: #ddd;
+    opacity: 0;  /* 初始时隐藏目标区域 */
+    transition: opacity 1s ease;  /* 渐显动画 */
+  }
+  
+  /* 目标区域 fade-in 动画 */
+  .goals.fade-in {
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+  
+  /* 目标区域标题样式 */
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+  
+  /* 背景音乐播放控制样式 */
+  audio {
+    display: none; /* 隐藏音频控制器 */
+  }
+  
+  /* 响应式布局：小屏设备适配 */
+  @media (max-width: 768px) {
+    .dynamic-text {
+      font-size: 1.5rem;
+    }
+  
+    .blockchain-cube {
+      width: 80px;
+      height: 80px;
+    }
+  
+    h3 {
+      font-size: 1.2rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  }
+  

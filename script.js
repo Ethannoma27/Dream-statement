@@ -1,172 +1,76 @@
-// 1. 背景粒子效果：创建粒子并动态移动
-const canvas = document.getElementById('background');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const particles = [];
-const numParticles = 150; // 控制粒子的数量
-
-// 粒子类
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 3 + 1;
-    this.speedX = Math.random() * 2 - 1;
-    this.speedY = Math.random() * 2 - 1;
-    this.color = 'rgba(0, 255, 0, 0.7)';
-  }
-
-  // 更新粒子位置
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-
-    // 如果粒子超出边界，重置位置
-    if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-    if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-  }
-
-  // 绘制粒子
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-// 初始化粒子
-function createParticles(event) {
-  for (let i = 0; i < numParticles; i++) {
-    particles.push(new Particle(event.x, event.y));
-  }
-}
-
-// 更新和绘制粒子
-function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除屏幕
-  particles.forEach(particle => {
-    particle.update();
-    particle.draw();
+document.addEventListener("DOMContentLoaded", function() {
+    // 逐字显示文本的初始化
+    const texts = document.querySelectorAll('.dynamic-text');
+    texts.forEach((text, index) => {
+      let content = text.innerHTML;
+      text.innerHTML = ''; // 清空原来的文本
+      let i = 0;
+      let interval = setInterval(() => {
+        text.innerHTML += content[i]; // 逐字显示
+        i++;
+        if (i === content.length) {
+          clearInterval(interval); // 动画结束
+          if (index === texts.length - 1) {
+            // 当最后一段文字显示完，执行其他动作
+            onTextAnimationComplete();
+          }
+        }
+      }, 100); // 100ms 显示一个字符
+    });
+  
+    // 初始化区块链魔方点击事件
+    const blockchainCube = document.getElementById('blockchainCube');
+    blockchainCube.addEventListener('click', () => {
+      // 点击魔方时触发旋转并改变颜色
+      blockchainCube.style.animation = 'rotateCube 5s infinite linear';
+      blockchainCube.style.backgroundColor = getRandomColor(); // 随机改变颜色
+      console.log("区块链魔方被点击了！");
+      playClickSound();  // 播放点击音效
+    });
   });
-
-  requestAnimationFrame(animateParticles); // 不断更新
-}
-
-// 鼠标点击产生粒子
-canvas.addEventListener('click', (event) => {
-  createParticles(event);
-});
-
-// 启动粒子动画
-animateParticles();
-
-// 2. 背景音乐和音效
-const backgroundMusic = new Audio('path/to/background-music.mp3');
-backgroundMusic.loop = true;
-backgroundMusic.volume = 0.2;
-backgroundMusic.play();
-
-// 音效 - 点击按钮时播放
-const buttonClickSound = new Audio('path/to/button-click.mp3');
-
-// 为进度条添加点击音效
-const progressBar = document.querySelectorAll('.progress-bar');
-
-progressBar.forEach(bar => {
-  bar.addEventListener('click', () => {
-    buttonClickSound.play();  // 播放点击音效
-  });
-});
-
-// 3. 鼠标悬停时的交互动画
-const goals = document.querySelectorAll('.goal');
-
-goals.forEach(goal => {
-  goal.addEventListener('mouseenter', () => {
-    goal.style.transform = 'scale(1.1)';
-    goal.style.boxShadow = '0 0 20px rgba(0, 255, 0, 1)';
-  });
-
-  goal.addEventListener('mouseleave', () => {
-    goal.style.transform = 'scale(1)';
-    goal.style.boxShadow = '0 0 10px rgba(0, 255, 0, 0.3)';
-  });
-});
-
-// 4. 进度条同步滚动：使用 IntersectionObserver 监听页面滚动
-const shortTermProgress = document.getElementById('short-progress');
-const longTermProgress = document.getElementById('long-progress');
-
-// 观察目标元素是否出现在视口
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // 当目标进入视口，启动进度条动画
-      shortTermProgress.style.width = '80%';
-      longTermProgress.style.width = '50%';
+  
+  // 获取随机颜色函数
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
     }
-  });
-}, {
-  threshold: 0.5 // 目标进入视口时触发（50%可见）
-});
-
-observer.observe(document.querySelector('.goal')); // 观察目标
-
-// 5. 3D旋转动画：鼠标移动时动态变化标题文字的3D效果
-const titleElement = document.querySelector('.neon-header h1');
-
-// 监听鼠标移动，改变文字的3D旋转
-document.addEventListener('mousemove', (event) => {
-  const xRotation = (event.clientY / window.innerHeight) * 30 - 15; // Y轴旋转
-  const yRotation = (event.clientX / window.innerWidth) * 30 - 15;  // X轴旋转
-
-  titleElement.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
-  titleElement.style.transition = 'transform 0.1s ease-out';
-});
-
-// 6. 流光粒子效果：创建流光背景并结合粒子动画
-function lightStreamEffect() {
-  const lightColor = 'rgba(0, 255, 0, 0.8)';
-  const lightWidth = Math.random() * 3 + 2; // 流光大小
-
-  // 随机产生流光位置
-  const xPos = Math.random() * canvas.width;
-  const yPos = Math.random() * canvas.height;
-
-  ctx.fillStyle = lightColor;
-  ctx.fillRect(xPos, yPos, lightWidth, lightWidth);
-}
-
-setInterval(lightStreamEffect, 100); // 每100ms绘制一次流光
-
-// 7. 目标文本逐字显示效果
-const title = document.getElementById('title');
-const text = "梦想宣言";
-let index = 0;
-
-function typeWriter() {
-  if (index < text.length) {
-    title.innerHTML += text.charAt(index);
-    index++;
-    setTimeout(typeWriter, 100); // 控制逐字显示的速度
+    return color;
   }
-}
-
-typeWriter();
-
-// 8. 动态进度条：通过滚动来同步更新目标进度条
-window.onscroll = () => {
-  const shortTermProgress = document.getElementById('short-progress');
-  const longTermProgress = document.getElementById('long-progress');
-
-  // 获取页面滚动的百分比
-  const scrollPercentage = (document.documentElement.scrollTop + window.innerHeight) / document.documentElement.scrollHeight;
-
-  // 控制进度条的变化
-  shortTermProgress.style.width = `${Math.min(scrollPercentage * 50, 100)}%`;  // 50% 为短期目标的最大进度
-  longTermProgress.style.width = `${Math.min(scrollPercentage * 30, 100)}%`;  // 30% 为长期目标的最大进度 
-}; 
+  
+  // 区块链魔方的旋转和颜色变化效果
+  document.getElementById('blockchainCube').addEventListener('click', function() {
+    this.style.animation = 'rotateCube 5s infinite linear'; // 重新开始旋转
+    this.style.backgroundColor = getRandomColor(); // 每次点击改变魔方的背景颜色
+  });
+  
+  // 文本逐字显示完成后的回调函数
+  function onTextAnimationComplete() {
+    console.log('所有文本显示完成！');
+  
+    // 执行其他后续操作：例如，目标区域进入动画
+    const goals = document.querySelector('.goals');
+    goals.classList.add('fade-in');  // 添加 fade-in 动画类
+    document.body.style.background = 'linear-gradient(135deg, #8e2de2, #4a00e0)'; // 改变背景颜色
+  
+    // 播放背景音乐（可选）
+    playBackgroundMusic();
+  }
+  
+  // 目标区域动画：添加一个 fade-in 动画效果
+  document.querySelector('.goals').style.opacity = 0;
+  document.querySelector('.goals').style.transition = 'opacity 1s ease';
+  
+  function playBackgroundMusic() {
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // 示例音频链接
+    audio.loop = true;  // 循环播放
+    audio.play();
+  }
+  
+  // 播放点击音效（可选）
+  function playClickSound() {
+    const clickSound = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'); // 示例点击音效
+    clickSound.play();
+  }
+  
