@@ -1,76 +1,129 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // 逐字显示文本的初始化
-    const texts = document.querySelectorAll('.dynamic-text');
-    texts.forEach((text, index) => {
-      let content = text.innerHTML;
-      text.innerHTML = ''; // 清空原来的文本
-      let i = 0;
-      let interval = setInterval(() => {
-        text.innerHTML += content[i]; // 逐字显示
-        i++;
-        if (i === content.length) {
-          clearInterval(interval); // 动画结束
-          if (index === texts.length - 1) {
-            // 当最后一段文字显示完，执行其他动作
-            onTextAnimationComplete();
-          }
+// 1. **全屏背景视频设置**
+const setupBackgroundVideo = () => {
+  const video = document.createElement('video');
+  video.src = 'background-video.mp4'; // 设置背景视频的路径
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.style.position = 'fixed';
+  video.style.top = 0;
+  video.style.left = 0;
+  video.style.width = '100%';
+  video.style.height = '100%';
+  video.style.objectFit = 'cover';
+  video.style.zIndex = -1;
+  document.body.appendChild(video);
+};
+
+// 2. **动态文本（Typed.js）**
+const setupDynamicText = () => {
+  new Typed('.tagline', {
+    strings: [
+      '梦想，学习提升和责任是我的驱动！',
+      '希望最大化发挥我的潜能！',
+      'AI自动化是我的未来！'
+    ],
+    typeSpeed: 60,
+    backSpeed: 30,
+    backDelay: 1000,
+    loop: true
+  });
+};
+
+// 3. **3D 动画（Three.js）**
+const setup3DAnimation = () => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  camera.position.z = 5;
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera);
+  };
+  animate();
+};
+
+// 4. **实时数据展示（Chart.js）**
+const setupChart = () => {
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+      datasets: [{
+        label: '销售数据',
+        data: [10, 25, 50, 70, 85],
+        borderColor: '#00bcd4',
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: { display: true, text: '月份' }
+        },
+        y: {
+          title: { display: true, text: '销售额' }
         }
-      }, 100); // 100ms 显示一个字符
-    });
-  
-    // 初始化区块链魔方点击事件
-    const blockchainCube = document.getElementById('blockchainCube');
-    blockchainCube.addEventListener('click', () => {
-      // 点击魔方时触发旋转并改变颜色
-      blockchainCube.style.animation = 'rotateCube 5s infinite linear';
-      blockchainCube.style.backgroundColor = getRandomColor(); // 随机改变颜色
-      console.log("区块链魔方被点击了！");
-      playClickSound();  // 播放点击音效
-    });
-  });
-  
-  // 获取随机颜色函数
-  function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+      }
     }
-    return color;
-  }
-  
-  // 区块链魔方的旋转和颜色变化效果
-  document.getElementById('blockchainCube').addEventListener('click', function() {
-    this.style.animation = 'rotateCube 5s infinite linear'; // 重新开始旋转
-    this.style.backgroundColor = getRandomColor(); // 每次点击改变魔方的背景颜色
   });
-  
-  // 文本逐字显示完成后的回调函数
-  function onTextAnimationComplete() {
-    console.log('所有文本显示完成！');
-  
-    // 执行其他后续操作：例如，目标区域进入动画
-    const goals = document.querySelector('.goals');
-    goals.classList.add('fade-in');  // 添加 fade-in 动画类
-    document.body.style.background = 'linear-gradient(135deg, #8e2de2, #4a00e0)'; // 改变背景颜色
-  
-    // 播放背景音乐（可选）
-    playBackgroundMusic();
+};
+
+// 5. **语音识别（Web Speech API）**
+const setupVoiceRecognition = () => {
+  const recognition = new window.SpeechRecognition();
+  recognition.lang = "zh-CN";
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    let transcript = event.results[0][0].transcript;
+    console.log("User said: " + transcript);
+  };
+};
+
+// 6. **区块链模拟（Web3.js）**
+const setupBlockchainSimulation = async () => {
+  if (typeof window.ethereum !== 'undefined') {
+    const web3 = new Web3(window.ethereum);
+    const accounts = await web3.eth.requestAccounts();
+    const userAddress = accounts[0];
+    console.log('User address: ', userAddress);
+  } else {
+    console.log('Ethereum not detected!');
   }
-  
-  // 目标区域动画：添加一个 fade-in 动画效果
-  document.querySelector('.goals').style.opacity = 0;
-  document.querySelector('.goals').style.transition = 'opacity 1s ease';
-  
-  function playBackgroundMusic() {
-    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); // 示例音频链接
-    audio.loop = true;  // 循环播放
-    audio.play();
-  }
-  
-  // 播放点击音效（可选）
-  function playClickSound() {
-    const clickSound = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'); // 示例点击音效
-    clickSound.play();
-  }
-  
+};
+
+// 7. **聊天机器人（Botpress）**
+const setupChatBot = () => {
+  const bot = new BotpressBot({
+    apiKey: 'YOUR_BOTPRESS_API_KEY',
+    containerId: 'chatbot-container'
+  });
+};
+
+// 8. **初始化函数：调用所有功能**
+const init = () => {
+  setupBackgroundVideo();
+  setupDynamicText();
+  setup3DAnimation();
+  setupChart();
+  setupVoiceRecognition();
+  setupBlockchainSimulation();
+  setupChatBot();
+};
+
+// 执行初始化函数
+init();
